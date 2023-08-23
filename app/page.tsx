@@ -9,17 +9,21 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import copy from 'copy-to-clipboard'
 
-import { Language, Song } from '@/config/types'
+import { Song, FilterValue } from '@/types'
 import songs from '@/config/songs.json'
 import config from '@/config/config.json'
 import Banner from '@/components/Banner'
 import SongTable from '@/components/SongTable'
+import Filter from '@/components/Filter'
+
+import styles from './page.module.css'
 
 export default function Home() {
-  // 语言
-  const [language, setLanguage] = useState<Language>('')
   // 搜索栏
-  const [filter, setFilter] = useState<string>('')
+  const [filter, setFilter] = useState<FilterValue>({
+    category: '',
+    keyword: '',
+  })
   // 回到顶部按钮
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false)
 
@@ -29,11 +33,24 @@ export default function Home() {
     })
   }, [])
 
+  const categories = React.useMemo(
+    () =>
+      songs
+        .reduce((acc: string[], song: Song) => {
+          if (!acc.includes(song.category)) {
+            acc.push(song.category)
+          }
+          return acc
+        }, [])
+        .sort(),
+    [],
+  )
+
   const filteredSongs: Song[] = songs.filter(
     (song) =>
-      (song.name.includes(filter.toLowerCase()) ||
-        song.artist.includes(filter.toLowerCase())) &&
-      (language ? song.language.includes(language) : true),
+      (song.name.includes(filter.keyword.toLowerCase()) ||
+        song.artist.includes(filter.keyword.toLowerCase())) &&
+      (filter.category ? song.category === filter.category : true),
   )
 
   const handleClick = (song: Song) => {
@@ -53,7 +70,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="bg-[url('/assets/images/background.webp')] bg-no-repeat bg-center bg-fixed bg-cover">
       <Head>
         <title>{config.title}</title>
         <meta
@@ -62,16 +79,16 @@ export default function Home() {
         />
         <meta name="description" content={`${config.title}`} />
       </Head>
-      <main>
+      <div className="container mx-auto px-4">
         <Banner />
-        <div className="flex">
-          <input
-            type="text"
-            onChange={(e) => setFilter(e.target.value)}
-          ></input>
-        </div>
+        <Filter
+          categories={categories}
+          filter={filter}
+          setFilter={setFilter}
+          onRandom={randomSong}
+        />
         <SongTable songs={filteredSongs} handleClick={handleClick} />
-      </main>
+      </div>
       <ToastContainer
         theme="light"
         position="top-right"
@@ -81,6 +98,6 @@ export default function Home() {
         closeOnClick
         rtl={false}
       />
-    </>
+    </div>
   )
 }
