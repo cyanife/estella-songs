@@ -83,7 +83,7 @@ export default function Home() {
         <meta name="description" content={`${config.title}`} />
         <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
       </Head>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 min-h-screen">
         <Banner />
         <Filter
           categories={categories}
