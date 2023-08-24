@@ -27,7 +27,7 @@ export default function SongTable({ songs, handleClick }: SongDetailProps) {
             <tr
               key={`${song.name}-${idx}`}
               onClick={() => handleClick(song)}
-              className="border-b border-white border-opacity-25 hover:bg-white hover:bg-opacity-40"
+              className="border-b border-white border-opacity-25 hover:bg-white hover:bg-opacity-40 last:border-b-0"
             >
               <td className="font-semibold">{song.name}</td>
               <td>{song.artist}</td>
