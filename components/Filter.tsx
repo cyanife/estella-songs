@@ -3,6 +3,8 @@
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { FilterValue } from '@/types'
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
 type FilterProps = {
   categories: string[]
@@ -32,6 +34,9 @@ export default function Filter({
             }
           >
             <span className="truncate">{category || '全部'}</span>
+            <span className="pointer-enents-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <ChevronUpDownIcon className="h-5 w-5" aria-hidden="true" />
+            </span>
           </Listbox.Button>
           <Transition
             as={Fragment}
@@ -73,7 +78,7 @@ export default function Filter({
       </Listbox>
       <input
         className="rounded-lg h-9 px-3 py-2 bg-white shadow-md bg-opacity-70 focus:outline-none focus:bg-opacity-100 text-sm md:order-2 order-1 md:col-span-3 col-span-2"
-        type="text"
+        type="search"
         value={keyword}
         onChange={(e) => setFilter({ keyword: e.target.value, category })}
       ></input>

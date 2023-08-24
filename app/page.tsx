@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Head from 'next/head'
 
+import { ChevronUpIcon } from '@heroicons/react/24/solid'
+
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import copy from 'copy-to-clipboard'
@@ -15,6 +17,7 @@ import config from '@/config/config.json'
 import Banner from '@/components/Banner'
 import SongTable from '@/components/SongTable'
 import Filter from '@/components/Filter'
+import Footer from '@/components/Footer'
 
 import styles from './page.module.css'
 
@@ -48,8 +51,8 @@ export default function Home() {
 
   const filteredSongs: Song[] = songs.filter(
     (song) =>
-      (song.name.includes(filter.keyword.toLowerCase()) ||
-        song.artist.includes(filter.keyword.toLowerCase())) &&
+      (song.name.toLowerCase().includes(filter.keyword.toLowerCase()) ||
+        song.artist.toLowerCase().includes(filter.keyword.toLowerCase())) &&
       (filter.category ? song.category === filter.category : true),
   )
 
@@ -78,6 +81,7 @@ export default function Home() {
           content="B站,bilibili,哔哩哔哩,虚拟主播,歌单,vup"
         />
         <meta name="description" content={`${config.title}`} />
+        <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
       </Head>
       <div className="container mx-auto px-4">
         <Banner />
@@ -88,6 +92,15 @@ export default function Home() {
           onRandom={randomSong}
         />
         <SongTable songs={filteredSongs} handleClick={handleClick} />
+        {showBackToTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-12 right-4 p-2 bg-dark bg-opacity-50 hover:bg-opacity-30 focus:outline-none rounded-full shadow-md"
+          >
+            <ChevronUpIcon className="h-5 w-5 text-white" />
+          </button>
+        )}
+        <Footer />
       </div>
       <ToastContainer
         theme="light"
