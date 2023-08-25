@@ -81,6 +81,7 @@ export default function Home() {
           content="B站,bilibili,哔哩哔哩,虚拟主播,歌单,vup"
         />
         <meta name="description" content={`${config.title}`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <link rel="icon" type="image/x-icon" href="/favicon.png"></link>
       </Head>
       <div className="container mx-auto px-4 min-h-screen">

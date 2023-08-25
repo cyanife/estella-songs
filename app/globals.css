@@ -70,9 +70,3 @@ th {
   padding: 0.5rem;
   white-space: nowrap;
 }
-
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
-  input {
-    font-size: 16px;
-  }
-}
