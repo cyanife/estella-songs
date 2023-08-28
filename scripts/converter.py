@@ -13,9 +13,9 @@ for i, row in enumerate(sheet.iter_rows(min_row=2, max_col=4, values_only=True))
     song_data = {
         "index": i + 1,
         "name": row[0],
-        "artist": row[1],
-        "category": row[2],
-        "BVID": row[3],
+        "artist": row[1] or "",
+        "category": row[2] or "",
+        "BVID": row[3] or "",
     }
     songs.append(song_data)
 
